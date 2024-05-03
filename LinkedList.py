@@ -18,6 +18,7 @@ class LinkedList:
         self.head = new_node
         self.n += 1
 
+
     def __str__(self):
         curr = self.head
         result = ''
@@ -120,6 +121,24 @@ class LinkedList:
     #     if self.search(curr.data) == index:
     #             return print(curr.data)
     #     return print('IndexError')
+    def maxi(self):
+        curr = self.head
+        maxx = 0
+        while curr.next != None:
+            if self.head.data < maxx:
+                maxx = self.head.data
+                curr = curr.next
+            else:
+                curr = curr.next
+            return maxx
+
+    def dell(self, item):
+        curr = self.head
+        while curr.next != None:
+            if self.head.data == self.maxi():
+                self.head.data = item
+            else:
+                curr = curr.next
 
 # Example usage
 
@@ -129,17 +148,17 @@ l.insert_head(1)
 l.insert_head(2)
 l.insert_head(3)
 l.insert_head(4)
-l.item(0)
+l.dell(17)
 print(l)
+# l.item(0)
 # l.search(20)
 # l.remove(12)
 # l.insert_head(7)
 # l.append(5)
 # l.append(9)
-# # l.delete_tail()
-# # l.delete_head()
-# # l.clear()
+# l.delete_tail()
+# l.delete_head()
+# l.clear()
 # print(len(l))
 # print(l)
 # print(l.insert_after(34, 23))  # Insert 23 after 4
-
