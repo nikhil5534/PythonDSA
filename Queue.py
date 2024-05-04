@@ -45,7 +45,16 @@ class Queue:
             counter += 1
             temp = temp.next
         return counter
-
+    def front_item(self):
+        if self.is_empty():
+            return 'Empty'
+        else:
+            return self.front.data
+    def rare_item(self):
+        if self.is_empty():
+            return 'Empty'
+        else:
+            return self.rare.data
 
 q = Queue()
 q.enqueue(2)
