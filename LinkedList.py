@@ -139,6 +139,17 @@ class LinkedList:
                 self.head.data = item
             else:
                 curr = curr.next
+    def replaceK(self,k):
+        if not self.head:
+            return None
+        tem = self.head
+        while k>1:
+            tem = tem.next
+            k -= 1
+        if k == 1:
+            ch = tem.next
+            tem.next = self.head
+            self.head = ch
 
 # Example usage
 
@@ -162,3 +173,5 @@ print(l)
 # print(len(l))
 # print(l)
 # print(l.insert_after(34, 23))  # Insert 23 after 4
+l.replaceK(3)
+print(l)

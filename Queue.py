@@ -21,11 +21,16 @@ class Queue:
             self.rare = new_node
 
     def dequeue(self):
-
         if self.front is None:
-            return 'Empty'
+            return print('Empty')
+
+        data = self.front.data
+        if self.front == self.rare:
+            self.front = None
+            self.rare = None
         else:
             self.front = self.front.next
+        return data
 
     def travrse(self):
 
@@ -62,5 +67,10 @@ q.enqueue(29)
 q.enqueue(7)
 q.enqueue(3)
 q.enqueue(43)
+q.dequeue()
+q.dequeue()
+q.dequeue()
+q.dequeue()
+q.dequeue()
 q.dequeue()
 q.travrse()
