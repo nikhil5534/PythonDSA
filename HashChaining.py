@@ -109,19 +109,32 @@ class Dictionary:
         return self.put(key, value)
 
     def get(self,key):
-        a = 0
-        for i in self.buckets:
-            a += 1
-            for j in range(i.size()):
-                node = i.get_node_at_index(j)
-                if key == node.key:
-                    value = node.value
-                    b = j
-                    found = True
-                    if found:
-                        print(f'Item found at index {b} in LinkedList at index {a} of Dictionary and '
-                              f'Value ={value}')
+        bucket_index = self.hash(key)
+        res = self.buckets[bucket_index].search(key)
 
+        if res == -1:
+            return 'Not Found'
+        else:
+            node = self.buckets[bucket_index].get_node_at_index(res)
+            return node.value
+        #     a = 0
+        # for i in self.buckets:
+        #     a += 1
+        #     for j in range(i.size()):
+        #         node = i.get_node_at_index(j)
+        #         if key == node.key:
+        #             value = node.value
+        #             b = j
+        #             found = True
+        #             break # break if found
+        #     if found:
+        #         break
+        #     a += 1
+        # if found:
+        #     print(f'Item found at index {b} in LinkedList at index {self.hash(key)} of Dictionary and '
+        #           f'Value ={value}')
+        # else:
+        #     print(f'Item with key {key} not found in the Dictionary')
 
     def put(self, key, value):
         bucket_index = self.hash(key)
