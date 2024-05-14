@@ -19,6 +19,14 @@ class LinkedList:
             print(curr.key, '-->', curr.value, ' ', end=" ")
             curr = curr.next
 
+    def size(self):
+        curr = self.head
+        s = 0
+        while curr:
+            s += 1
+            curr = curr.next
+        return  s
+
     def append(self, key, value):
         new_node = Node(key, value)
         if not self.head:
@@ -75,7 +83,7 @@ class LinkedList:
         curr = self.head
         pos = 0
         while curr is not None:
-            if pos == index :
+            if pos == index:
                 return curr
             curr = curr.next
             pos = pos + 1
@@ -97,13 +105,37 @@ class Dictionary:
             l.append(LinkedList())
         return l
 
+    def __setitem__(self, key, value):  # magic for put in dictionary directly using D['key'] = value
+        return self.put(key, value)
+
+    def get(self,key):
+        a = 0
+        for i in self.buckets:
+            a += 1
+            for j in range(i.size()):
+                node = i.get_node_at_index(j)
+                if key == node.key:
+                    value = node.value
+                    b = j
+                    found = True
+                    if found:
+                        print(f'Item found at index {b} in LinkedList at index {a} of Dictionary and '
+                              f'Value ={value}')
+
+
     def put(self, key, value):
-        bucket_index = hash(key)
+        bucket_index = self.hash(key)
+        # to check if phle se haio yha nahi
         node_index = self.get_node_index(bucket_index, key)
         if node_index == -1:
             # insert
             self.buckets[bucket_index].append(key, value)
             self.size += 1
+            load_factor = self.size/self.capacity
+
+            if load_factor >=2:
+                self.rehash()
+
         else:
             # update
             node = self.buckets[bucket_index].get_node_at_index(node_index)
@@ -112,8 +144,32 @@ class Dictionary:
     def get_node_index(self, bucket_index, key):
         return self.buckets[bucket_index].search(key)
 
+    def rehash(self):
+        self.capacity = self.capacity * 2
+        old_buckets = self.buckets
+        self.size = 0
+        self.buckets = self.make_array(self.capacity)
+
+        for i in old_buckets:
+            for j in range(i.size()):
+                node = i.get_node_at_index(j)
+                key_item = node.key
+                value_item = node.value
+                self.put(key_item,value_item)
+
     def hash(self, key):
         return abs(hash(key)) % self.capacity
 
 
+n = 4
+D = Dictionary(n)
 
+D.put('Python', 333)
+D.put('Python1', 333)
+D.put('Python14', 333)
+D.put('Python143', 333)
+D.put('Python1431', 333)
+D.put('Python1413', 333)
+D.put('Python141223', 333)
+D.put('Python1412c23', 333)
+D.get("Python1413")
