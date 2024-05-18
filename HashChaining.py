@@ -108,6 +108,9 @@ class Dictionary:
     def __setitem__(self, key, value):  # magic for put in dictionary directly using D['key'] = value
         return self.put(key, value)
 
+    def __getitem__(self, key):
+        return self.get(key)
+
     def get(self,key):
         bucket_index = self.hash(key)
         res = self.buckets[bucket_index].search(key)
@@ -136,6 +139,12 @@ class Dictionary:
         # else:
         #     print(f'Item with key {key} not found in the Dictionary')
 
+
+    def __delitem__(self, key):
+        bucket_index = self.hash(key)
+        self.buckets[bucket_index].remove(key)
+
+
     def put(self, key, value):
         bucket_index = self.hash(key)
         # to check if phle se haio yha nahi
@@ -156,6 +165,12 @@ class Dictionary:
 
     def get_node_index(self, bucket_index, key):
         return self.buckets[bucket_index].search(key)
+
+    def __str__(self):
+        for i in self.buckets:
+            i.traverse()
+        return ''
+
 
     def rehash(self):
         self.capacity = self.capacity * 2
@@ -185,4 +200,7 @@ D.put('Python1431', 333)
 D.put('Python1413', 333)
 D.put('Python141223', 333)
 D.put('Python1412c23', 333)
-D.get("Python1413")
+D['Python1413']
+del D['Python']
+D.get("Python")
+print(D)
